@@ -1,0 +1,26 @@
+# Introduction: Let us setup the voting application from scratch using docker-compose. Shown below is the architecture diagram of the application.
+# The first step is to define the list of containers to run. 3 of 5 elements are already listed in the docker-compose.yml file.
+
+# Instruction: Update the docker-compose.yml file with the remaining two services - result and worker.
+# ------------------------------
+#           BEFORE
+# ------------------------------
+#redis:
+#
+#db:
+#
+#vote:
+
+# ------------------------------
+#           AFTER
+# ------------------------------
+
+redis:
+
+db:
+
+vote:
+
+result:
+
+worker:

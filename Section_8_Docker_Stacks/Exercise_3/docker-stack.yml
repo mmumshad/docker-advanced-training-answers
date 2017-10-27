@@ -1,0 +1,130 @@
+# Introduction: We would like the worker-app to restart automatically when it fails. But every time it fails wait for 10 seconds before restarting.
+
+# Instruction: Add a restart_policy option under deploy section in the worker service. Under it add a property condition with a value of on-failure and another property - delay with a value of 10s.
+# ------------------------------
+#           BEFORE
+# ------------------------------
+#version: '3'
+#service:
+#  redis:
+#    image: redis
+#    networks:
+#      - back-end
+#    volumes:
+#      - redis-data:/var/lib/redis
+#    deploy:
+#      replicas: 1
+#
+#  db:
+#    image: postgres:9.4
+#    networks:
+#        - back-end
+#    volumes:
+#      - db-data:/var/lib/postgresql/data
+#    deploy:
+#          replicas: 1
+#          placement:
+#            constraints: [node.role == manager]
+#
+#  vote:
+#    image: voting-app
+#    ports:
+#      - "5000:80"
+#    networks:
+#        - back-end
+#        - front-end
+#    deploy:
+#          replicas: 2
+#
+#  result:
+#    image: worker-app
+#    ports:
+#        - 5000:80
+#    networks:
+#        - back-end
+#        - front-end
+#    deploy:
+#          replicas: 1
+#
+#  worker:
+#    image: result-app
+#    networks:
+#        - back-end
+#    deploy:
+#          replicas: 1
+#
+#networks:
+#  front-end:
+#    driver: bridge
+#  back-end:
+#    driver: bridge
+#
+#volumes:
+#  redis-data:
+#  db-data:
+
+# ------------------------------
+#           AFTER
+# ------------------------------
+
+version: '3'
+service:
+  redis:
+    image: redis
+    networks:
+      - back-end
+    volumes:
+      - redis-data:/var/lib/redis
+    deploy:
+      replicas: 1
+
+  db:
+    image: postgres:9.4
+    networks:
+        - back-end
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    deploy:
+          replicas: 1
+          placement:
+            constraints: [node.role == manager]
+
+  vote:
+    image: voting-app
+    ports:
+      - "5000:80"
+    networks:
+        - back-end
+        - front-end
+    deploy:
+          replicas: 2
+
+  result:
+    image: worker-app
+    ports:
+        - 5000:80
+    networks:
+        - back-end
+        - front-end
+    deploy:
+          replicas: 1
+
+  worker:
+    image: result-app
+    networks:
+        - back-end
+    deploy:
+          replicas: 1
+          restart_policy:
+            condition: on-failure
+            delay: 10s
+
+networks:
+  front-end:
+    driver: bridge
+  back-end:
+    driver: bridge
+
+volumes:
+  redis-data:
+  db-data:

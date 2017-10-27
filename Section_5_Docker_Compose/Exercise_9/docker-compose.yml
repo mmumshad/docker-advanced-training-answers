@@ -1,0 +1,78 @@
+# Introduction: All containers are on the same network. We would like to separate them to different networks.
+# Instruction: Next, Associate all containers with back-end network and the vote and result app with both front-end and back-end networks.
+# ------------------------------
+#           BEFORE
+# ------------------------------
+#version: '3'
+#services:
+#  redis:
+#    image: redis
+#
+#  db:
+#    image: postgres:9.4
+#
+#  vote:
+#    image: voting-app
+#    ports:
+#      - "5000:80"
+#
+#  result:
+#    image: worker-app
+#    ports:
+#        - 5000:80
+#
+#  worker:
+#    image: result-app
+#
+#  networks:
+#    front-end:
+#      driver: bridge
+#    back-end:
+#      driver: bridge
+#
+#  worker:
+#    image: result-app
+
+
+# ------------------------------
+#           AFTER
+# ------------------------------
+
+version: '3'
+services:
+  redis:
+    image: redis
+    networks:
+      - back-end
+
+  db:
+    image: postgres:9.4
+    networks:
+        - back-end
+
+  vote:
+    image: voting-app
+    ports:
+      - "5000:80"
+    networks:
+        - back-end
+        - front-end
+
+  result:
+    image: worker-app
+    ports:
+        - 5000:80
+    networks:
+        - back-end
+        - front-end
+
+  worker:
+    image: result-app
+    networks:
+        - back-end
+
+networks:
+    front-end:
+      driver: bridge
+    back-end:
+      driver: bridge

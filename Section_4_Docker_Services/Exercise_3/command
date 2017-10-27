@@ -1,0 +1,10 @@
+# The current command only one creates one instance of voting-app. Let us update the command to create 3 instances.
+# Add a --replicas option and provide a value of 3
+
+# BEFORE
+docker service create --name vote voting-app
+
+#-----------------
+#AFTER
+
+docker service create --replicas 3 --name vote voting-app

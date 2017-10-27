@@ -1,0 +1,9 @@
+# We would like to attach the services to a dedicated front-end network
+
+# BEFORE
+# docker service create --replicas 3 --name vote -p 8080:80 voting-app
+
+#-----------------
+#AFTER
+
+docker service create --replicas 3 --name vote -p 8080:80 --network front-end voting-app

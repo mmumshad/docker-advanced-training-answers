@@ -1,0 +1,5 @@
+# Input a command in the command file to create a new service. Use the image voting-app for this.
+# BEFORE
+
+#-----------------
+docker service create voting-app

@@ -1,0 +1,33 @@
+# Introduction: Let us now update each service with the image we plan to use.
+# Instruction: Add the image property to each service. The images we plan to use are: redis, postgres:9.4, voting-app, worker-app, result-app
+# ------------------------------
+#           BEFORE
+# ------------------------------
+#redis:
+#
+#db:
+#
+#vote:
+#
+#result:
+#
+#worker:
+
+# ------------------------------
+#           AFTER
+# ------------------------------
+
+redis:
+  image: redis
+
+db:
+  image: postgres:9.4
+
+vote:
+  image: voting-app
+
+result:
+  image: worker-app
+
+worker:
+  image: result-app

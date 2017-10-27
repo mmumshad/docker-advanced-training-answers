@@ -1,0 +1,115 @@
+# Introduction: Given below is the docker-compose file from the previous coding exercise. We would now like to deploy our application on Docker Cloud using stack files.
+# The current docker compose file can be easily converted to docker-stack.yml file and it works just fine. So we have renamed the file from docker-stack.yml to docker-stack.yml
+# However, this only deploys a single instance of each element. We would like to deploy multiple instances of these.
+
+# Instruction: Update the docker-stack.yml file to include a deploy section under each service and add replicas parameter to run 1 instances of redis, db , worker and result applications. Deploy 2 instances of vote app.
+# ------------------------------
+#           BEFORE
+# ------------------------------
+#version: '3'
+#service:
+#  redis:
+#    image: redis
+#    networks:
+#      - back-end
+#    volumes:
+#      - redis-data:/var/lib/redis
+#
+#  db:
+#    image: postgres:9.4
+#    networks:
+#        - back-end
+#    volumes:
+#      - db-data:/var/lib/postgresql/data
+#
+#  vote:
+#    image: voting-app
+#    ports:
+#      - "5000:80"
+#    networks:
+#        - back-end
+#        - front-end
+#
+#  result:
+#    image: worker-app
+#    ports:
+#        - 5000:80
+#    networks:
+#        - back-end
+#        - front-end
+#
+#  worker:
+#    image: result-app
+#    networks:
+#        - back-end
+#
+#networks:
+#  front-end:
+#    driver: bridge
+#  back-end:
+#    driver: bridge
+#
+#volumes:
+#  redis-data:
+#  db-data:
+
+# ------------------------------
+#           AFTER
+# ------------------------------
+
+version: '3'
+service:
+  redis:
+    image: redis
+    networks:
+      - back-end
+    volumes:
+      - redis-data:/var/lib/redis
+    deploy:
+      replicas: 1
+
+  db:
+    image: postgres:9.4
+    networks:
+        - back-end
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    deploy:
+          replicas: 1
+
+  vote:
+    image: voting-app
+    ports:
+      - "5000:80"
+    networks:
+        - back-end
+        - front-end
+    deploy:
+          replicas: 2
+
+  result:
+    image: worker-app
+    ports:
+        - 5000:80
+    networks:
+        - back-end
+        - front-end
+    deploy:
+          replicas: 1
+
+  worker:
+    image: result-app
+    networks:
+        - back-end
+    deploy:
+          replicas: 1
+
+networks:
+  front-end:
+    driver: bridge
+  back-end:
+    driver: bridge
+
+volumes:
+  redis-data:
+  db-data:

@@ -1,0 +1,57 @@
+# Introduction: Docker-Compose Version 2 and up do not require links to be specified. So let us get rid of links.
+# Instruction: Remove all link entries and their values.
+# ------------------------------
+#           BEFORE
+# ------------------------------
+#version: '3'
+#services:
+#  redis:
+#    image: redis
+#
+#  db:
+#    image: postgres:9.4
+#
+#  vote:
+#    image: voting-app
+#    ports:
+#      - "5000:80"
+#    links:
+#      - redis
+#
+#  result:
+#    image: worker-app
+#    ports:
+#        - 5000:80
+#    links:
+#        - db
+#
+#  worker:
+#    image: result-app
+#    links:
+#        - redis
+#        - db
+
+# ------------------------------
+#           AFTER
+# ------------------------------
+
+version: '3'
+services:
+  redis:
+    image: redis
+
+  db:
+    image: postgres:9.4
+
+  vote:
+    image: voting-app
+    ports:
+      - "5000:80"
+
+  result:
+    image: worker-app
+    ports:
+        - 5000:80
+
+  worker:
+    image: result-app

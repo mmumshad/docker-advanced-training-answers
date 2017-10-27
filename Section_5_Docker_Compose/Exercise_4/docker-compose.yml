@@ -1,0 +1,53 @@
+# Introduction: The applications fail as they are unable to reach the underlying database and redis services.
+# Instruction: Add a link to the vote, result and worker applications to access redis and database services. The voting-app requires access to redis, result-app requires access to postgres database and the worker app requires access to both redis and postgres.
+# ------------------------------
+#           BEFORE
+# ------------------------------
+#redis:
+#  image: redis
+#
+#db:
+#  image: postgres:9.4
+#
+#vote:
+#  image: voting-app
+#  ports:
+#    - "5000:80"
+#
+#result:
+#  image: worker-app
+#  ports:
+#      - 5000:80
+#
+#worker:
+#  image: result-app
+
+# ------------------------------
+#           AFTER
+# ------------------------------
+
+redis:
+  image: redis
+
+db:
+  image: postgres:9.4
+
+vote:
+  image: voting-app
+  ports:
+    - "5000:80"
+  links:
+    - redis
+
+result:
+  image: worker-app
+  ports:
+      - 5000:80
+  links:
+      - db
+
+worker:
+  image: result-app
+  links:
+      - redis
+      - db

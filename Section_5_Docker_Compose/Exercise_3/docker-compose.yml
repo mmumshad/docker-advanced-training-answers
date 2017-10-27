@@ -1,0 +1,42 @@
+# Introduction: Two of the applications are web servers. To enable the users to access the web servers through a port we must publish ports
+# Instruction: Add a port publish (ports) property to vote and result app. Both of these services expose port 80, so let's map them to 5000 and 5001 respectively.
+# ------------------------------
+#           BEFORE
+# ------------------------------
+#redis:
+#  image: redis
+#
+#db:
+#  image: postgres:9.4
+#
+#vote:
+#  image: voting-app
+#
+#result:
+#  image: worker-app
+#
+#worker:
+#  image: result-app
+
+# ------------------------------
+#           AFTER
+# ------------------------------
+
+redis:
+  image: redis
+
+db:
+  image: postgres:9.4
+
+vote:
+  image: voting-app
+  ports:
+    - "5000:80"
+
+result:
+  image: worker-app
+  ports:
+      - 5000:80
+
+worker:
+  image: result-app

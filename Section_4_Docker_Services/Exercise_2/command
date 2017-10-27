@@ -1,0 +1,8 @@
+# Let us name the service vote. Add a name option to name the service vote.
+# BEFORE
+docker service create voting-app
+
+#-----------------
+#AFTER
+
+docker service create --name vote voting-app

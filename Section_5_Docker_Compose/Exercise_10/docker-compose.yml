@@ -1,0 +1,90 @@
+# Introduction: We must also mount volumes to persist redis and postgres sql data.
+# Instruction: First, define two volumes by adding a volumes section in the file and add two volumes under it - redis-data and db-data.
+# ------------------------------
+#           BEFORE
+# ------------------------------
+#version: '3'
+#services:
+#  redis:
+#    image: redis
+#    networks:
+#      - back-end
+#
+#  db:
+#    image: postgres:9.4
+#    networks:
+#        - back-end
+#
+#  vote:
+#    image: voting-app
+#    ports:
+#      - "5000:80"
+#    networks:
+#        - back-end
+#        - front-end
+#
+#  result:
+#    image: worker-app
+#    ports:
+#        - 5000:80
+#    networks:
+#        - back-end
+#        - front-end
+#
+#  worker:
+#    image: result-app
+#    networks:
+#        - back-end
+#
+#networks:
+#  front-end:
+#    driver: bridge
+#  back-end:
+#    driver: bridge
+
+# ------------------------------
+#           AFTER
+# ------------------------------
+
+version: '3'
+services:
+  redis:
+    image: redis
+    networks:
+      - back-end
+
+  db:
+    image: postgres:9.4
+    networks:
+        - back-end
+
+  vote:
+    image: voting-app
+    ports:
+      - "5000:80"
+    networks:
+        - back-end
+        - front-end
+
+  result:
+    image: worker-app
+    ports:
+        - 5000:80
+    networks:
+        - back-end
+        - front-end
+
+  worker:
+    image: result-app
+    networks:
+        - back-end
+
+networks:
+  front-end:
+    driver: bridge
+  back-end:
+    driver: bridge
+
+volumes:
+  redis-data:
+  db-data:

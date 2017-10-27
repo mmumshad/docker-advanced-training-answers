@@ -1,0 +1,63 @@
+# Instruction: Next, add a services section and move all services under it. You could select multiple lines at once and hit tab to indent them to the right.
+# ------------------------------
+#           BEFORE
+# ------------------------------
+#version: '3'
+#redis:
+#  image: redis
+#
+#db:
+#  image: postgres:9.4
+#
+#vote:
+#  image: voting-app
+#  ports:
+#    - "5000:80"
+#  links:
+#    - redis
+#
+#result:
+#  image: worker-app
+#  ports:
+#      - 5000:80
+#  links:
+#      - db
+#
+#worker:
+#  image: result-app
+#  links:
+#      - redis
+#      - db
+
+
+
+# ------------------------------
+#           AFTER
+# ------------------------------
+version: '3'
+services:
+  redis:
+    image: redis
+
+  db:
+    image: postgres:9.4
+
+  vote:
+    image: voting-app
+    ports:
+      - "5000:80"
+    links:
+      - redis
+
+  result:
+    image: worker-app
+    ports:
+        - 5000:80
+    links:
+        - db
+
+  worker:
+    image: result-app
+    links:
+        - redis
+        - db

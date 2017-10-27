@@ -1,0 +1,6 @@
+# At a later point in time we decide to update the service to have 6 containers.
+# Input a command in the command file to update our service "vote" to have 6 replicas.
+# BEFORE
+
+#-----------------
+docker service update --replicas=6 vote

@@ -1,0 +1,11 @@
+# Since our application is a web application it needs ports to be published. The web application exports port 80.
+# Add a port publish option to publish port 80 to port 8080 on the host.
+# Note the format: -p <host port>:<container port>
+
+# BEFORE
+docker service create --replicas 3 --name vote voting-app
+
+#-----------------
+#AFTER
+
+docker service create --replicas 3 --name vote -p 8080:80 voting-app

@@ -1,0 +1,57 @@
+# Introduction: All containers are on the same network. We would like to separate them to different networks.
+# Instruction: First, define two networks. Create a network section in the file and add two networks under it - front-end and back-end. You may optionally specify the driver to be bridge.
+# ------------------------------
+#           BEFORE
+# ------------------------------
+#version: '3'
+#services:
+#  redis:
+#    image: redis
+#
+#  db:
+#    image: postgres:9.4
+#
+#  vote:
+#    image: voting-app
+#    ports:
+#      - "5000:80"
+#
+#  result:
+#    image: worker-app
+#    ports:
+#        - 5000:80
+#
+#  worker:
+#    image: result-app
+
+
+# ------------------------------
+#           AFTER
+# ------------------------------
+
+version: '3'
+services:
+  redis:
+    image: redis
+
+  db:
+    image: postgres:9.4
+
+  vote:
+    image: voting-app
+    ports:
+      - "5000:80"
+
+  result:
+    image: worker-app
+    ports:
+        - 5000:80
+
+  worker:
+    image: result-app
+
+  networks:
+    front-end:
+      driver: bridge
+    back-end:
+      driver: bridge

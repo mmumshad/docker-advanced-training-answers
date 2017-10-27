@@ -1,0 +1,125 @@
+# Introduction: In our design, the db server is always required to be placed on the manager node. Add a placement constraint on the db server to fulfill this requirement.
+
+# Instruction: Add a placement property under deploy in db service. Under placement add constraints property and provide the value [node.role == manager]
+# ------------------------------
+#           BEFORE
+# ------------------------------
+#version: '3'
+#service:
+#  redis:
+#    image: redis
+#    networks:
+#      - back-end
+#    volumes:
+#      - redis-data:/var/lib/redis
+#    deploy:
+#      replicas: 1
+#
+#  db:
+#    image: postgres:9.4
+#    networks:
+#        - back-end
+#    volumes:
+#      - db-data:/var/lib/postgresql/data
+#    deploy:
+#          replicas: 1
+#
+#  vote:
+#    image: voting-app
+#    ports:
+#      - "5000:80"
+#    networks:
+#        - back-end
+#        - front-end
+#    deploy:
+#          replicas: 2
+#
+#  result:
+#    image: worker-app
+#    ports:
+#        - 5000:80
+#    networks:
+#        - back-end
+#        - front-end
+#    deploy:
+#          replicas: 1
+#
+#  worker:
+#    image: result-app
+#    networks:
+#        - back-end
+#    deploy:
+#          replicas: 1
+#
+#networks:
+#  front-end:
+#    driver: bridge
+#  back-end:
+#    driver: bridge
+#
+#volumes:
+#  redis-data:
+#  db-data:
+
+# ------------------------------
+#           AFTER
+# ------------------------------
+
+version: '3'
+service:
+  redis:
+    image: redis
+    networks:
+      - back-end
+    volumes:
+      - redis-data:/var/lib/redis
+    deploy:
+      replicas: 1
+
+  db:
+    image: postgres:9.4
+    networks:
+        - back-end
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    deploy:
+          replicas: 1
+          placement:
+            constraints: [node.role == manager]
+
+  vote:
+    image: voting-app
+    ports:
+      - "5000:80"
+    networks:
+        - back-end
+        - front-end
+    deploy:
+          replicas: 2
+
+  result:
+    image: worker-app
+    ports:
+        - 5000:80
+    networks:
+        - back-end
+        - front-end
+    deploy:
+          replicas: 1
+
+  worker:
+    image: result-app
+    networks:
+        - back-end
+    deploy:
+          replicas: 1
+
+networks:
+  front-end:
+    driver: bridge
+  back-end:
+    driver: bridge
+
+volumes:
+  redis-data:
+  db-data:
