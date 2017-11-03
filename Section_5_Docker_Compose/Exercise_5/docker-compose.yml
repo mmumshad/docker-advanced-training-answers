@@ -17,14 +17,14 @@
 #    - redis
 #
 #result:
-#  image: worker-app
+#  image: result-app
 #  ports:
-#      - 5000:80
+#      - 5001:80
 #  links:
 #      - db
 #
 #worker:
-#  image: result-app
+#  image: worker-app
 #  links:
 #      - redis
 #      - db
@@ -48,14 +48,14 @@ vote:
     - redis
 
 result:
-  image: worker-app
+  image: result-app
   ports:
-      - 5000:80
+      - 5001:80
   links:
       - db
 
 worker:
-  image: result-app
+  image: worker-app
   links:
       - redis
       - db

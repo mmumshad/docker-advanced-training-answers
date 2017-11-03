@@ -17,12 +17,13 @@
 #      - "5000:80"
 #
 #  result:
-#    image: worker-app
+#    image: result-app
 #    ports:
-#        - 5000:80
+#        - 5001:80
 #
 #  worker:
-#    image: result-app
+#    image: worker-app
+
 
 
 # ------------------------------
@@ -43,15 +44,13 @@ services:
       - "5000:80"
 
   result:
-    image: worker-app
+    image: result-app
     ports:
-        - 5000:80
+        - 5001:80
 
   worker:
-    image: result-app
+    image: worker-app
 
-  networks:
-    front-end:
-      driver: bridge
-    back-end:
-      driver: bridge
+networks:
+  front-end:
+  back-end:

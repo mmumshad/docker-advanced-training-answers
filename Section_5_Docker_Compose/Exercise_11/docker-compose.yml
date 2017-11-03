@@ -24,15 +24,15 @@
 #        - front-end
 #
 #  result:
-#    image: worker-app
+#    image: result-app
 #    ports:
-#        - 5000:80
+#        - 5001:80
 #    networks:
 #        - back-end
 #        - front-end
 #
 #  worker:
-#    image: result-app
+#    image: worker-app
 #    networks:
 #        - back-end
 #
@@ -51,7 +51,7 @@
 # ------------------------------
 
 version: '3'
-service:
+services:
   redis:
     image: redis
     networks:
@@ -75,15 +75,15 @@ service:
         - front-end
 
   result:
-    image: worker-app
+    image: result-app
     ports:
-        - 5000:80
+        - 5001:80
     networks:
         - back-end
         - front-end
 
   worker:
-    image: result-app
+    image: worker-app
     networks:
         - back-end
 

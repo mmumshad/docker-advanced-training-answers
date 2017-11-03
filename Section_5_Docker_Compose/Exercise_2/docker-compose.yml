@@ -27,7 +27,7 @@ vote:
   image: voting-app
 
 result:
-  image: worker-app
+  image: result-app
 
 worker:
-  image: result-app
+  image: worker-app

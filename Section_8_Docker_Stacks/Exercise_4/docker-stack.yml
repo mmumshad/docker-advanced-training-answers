@@ -37,9 +37,9 @@
 #          replicas: 2
 #
 #  result:
-#    image: worker-app
+#    image: result-app
 #    ports:
-#        - 5000:80
+#        - 5001:80
 #    networks:
 #        - back-end
 #        - front-end
@@ -47,7 +47,7 @@
 #          replicas: 1
 #
 #  worker:
-#    image: result-app
+#    image: worker-app
 #    networks:
 #        - back-end
 #    deploy:
@@ -105,9 +105,9 @@ service:
             parallelism: 2
 
   result:
-    image: worker-app
+    image: result-app
     ports:
-        - 5000:80
+        - 5001:80
     networks:
         - back-end
         - front-end
@@ -115,7 +115,7 @@ service:
           replicas: 1
 
   worker:
-    image: result-app
+    image: worker-app
     networks:
         - back-end
     deploy:
